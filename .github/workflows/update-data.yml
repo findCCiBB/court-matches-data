@@ -38,3 +38,72 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add data/matches/current.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update match data" && git push)
+name: Update Match Data
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write    # 添加创建 issue 的权限
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+          
+      - name: Update match data
+        id: update
+        run: |
+          python scripts/update_matches.py
+          
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/matches/current.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update match data" && git push)
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const title = '数据更新失败通知';
+            const body = `
+            # 数据更新失败
+            
+            ## 失败信息
+            - 工作流: ${context.workflow}
+            - 运行编号: ${context.runNumber}
+            - 触发事件: ${context.eventName}
+            - 失败时间: ${new Date().toISOString()}
+            
+            ## 查看详情
+            [查看运行日志](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+            `;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['bug', 'automated']
+            });
