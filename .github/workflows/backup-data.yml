@@ -15,7 +15,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
         
@@ -42,7 +42,7 @@ jobs:
           tar -czf backup_${{ steps.date.outputs.date }}.tar.gz backup/
           
       - name: Upload backup artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: match-data-backup-${{ steps.date.outputs.date }}
           path: backup_${{ steps.date.outputs.date }}.tar.gz
