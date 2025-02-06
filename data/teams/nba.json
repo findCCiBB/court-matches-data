@@ -1,23 +1,16 @@
 {
-  "league": "NBA",
-  "teams": [
-    {
-      "id": "lakers",
-      "name": "洛杉矶湖人",
-      "shortName": "湖人",
-      "city": "洛杉矶",
-      "logo": "teams/nba/lakers.png",
-      "primaryColor": "#552583",
-      "secondaryColor": "#FDB927"
-    },
-    {
-      "id": "warriors",
-      "name": "金州勇士",
-      "shortName": "勇士",
-      "city": "旧金山",
-      "logo": "teams/nba/warriors.png",
-      "primaryColor": "#1D428A",
-      "secondaryColor": "#FFC72C"
+    "teams": {
+        "湖人": {
+            "fullName": "洛杉矶湖人",
+            "logo": "images/湖人.jpg",
+            "city": "洛杉矶",
+            "arena": "斯台普斯中心"
+        },
+        "勇士": {
+            "fullName": "金州勇士",
+            "logo": "images/勇士.jpg",
+            "city": "旧金山",
+            "arena": "大通中心"
+        }
     }
-  ]
 }
