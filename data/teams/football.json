@@ -1,0 +1,25 @@
+// data/teams/football.json
+{
+    "teams": {
+        "曼联": {
+            "fullName": "曼彻斯特联",
+            "logo": "images/曼联.jpg",
+            "stadium": "老特拉福德"
+        },
+        "阿森纳": {
+            "fullName": "阿森纳",
+            "logo": "images/阿森纳.jpg",
+            "stadium": "酋长球场"
+        },
+        "皇家马德里": {
+            "fullName": "皇家马德里",
+            "logo": "images/皇马.jpg",
+            "stadium": "伯纳乌"
+        },
+        "巴塞罗那": {
+            "fullName": "巴塞罗那",
+            "logo": "images/巴萨.jpg",
+            "stadium": "诺坎普"
+        }
+    }
+}
