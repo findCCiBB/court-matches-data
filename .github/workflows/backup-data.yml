@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write        # 添加上传 artifacts 的权限
 
 jobs:
   backup:
@@ -15,34 +16,40 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
         
       - name: Create backup directory
-        run: mkdir -p backup
+        run: |
+          mkdir -p backup/matches
+          mkdir -p backup/teams
         
-      - name: Backup current matches
+      - name: Backup data
         run: |
-          cp data/matches/current.json backup/current_${{ steps.date.outputs.date }}.json
-          
-      - name: Backup history matches
-        run: |
-          cp -r data/matches/history backup/history_${{ steps.date.outputs.date }}
+          # 备份当前比赛数据
+          cp data/matches/current.json backup/matches/
+          # 备份历史比赛数据
+          cp -r data/matches/history backup/matches/
+          # 备份球队数据
+          cp data/teams/*.json backup/teams/
           
       - name: Create backup archive
         run: |
           tar -czf backup_${{ steps.date.outputs.date }}.tar.gz backup/
           
       - name: Upload backup artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: match-data-backup-${{ steps.date.outputs.date }}
           path: backup_${{ steps.date.outputs.date }}.tar.gz
-          retention-days: 30  # 保留30天
+          retention-days: 30
           
       - name: Cleanup
+        if: always()
         run: |
           rm -rf backup/
-          rm backup_${{ steps.date.outputs.date }}.tar.gz
+          rm -f backup_${{ steps.date.outputs.date }}.tar.gz
