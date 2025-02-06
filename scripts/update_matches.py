@@ -31,20 +31,28 @@ def update_match_status():
     
     # 更新比赛状态
     if today in current_data['matches']:
+        valid_matches = []  # 新增：用于存储验证通过的比赛
         for match in current_data['matches'][today]:
+            # 新增：添加数据验证
+            if not validate_match_data(match):
+                print(f"Skipping invalid match: {match.get('id', 'Unknown')}")
+                continue
+                
             match_time = datetime.strptime(f"{today} {match['startTime']}", '%Y-%m-%d %H:%M')
             match_time = match_time.replace(tzinfo=timezone.utc)
             
             if now < match_time:
                 match['status'] = '未开始'
-            elif now < match_time + timedelta(hours=3):  # 假设比赛持续3小时
+            elif now < match_time + timedelta(hours=3):
                 match['status'] = '进行中'
             else:
                 match['status'] = '已结束'
-                
-                # 如果比赛结束，移动到历史记录
-                if match['status'] == '已结束':
-                    move_to_history(match, today)
+                move_to_history(match, today)
+            
+            valid_matches.append(match)  # 新增：只添加验证通过的比赛
+        
+        # 新增：更新为验证通过的比赛列表
+        current_data['matches'][today] = valid_matches
     
     # 更新最后更新时间
     current_data['lastUpdated'] = now.isoformat()
@@ -70,6 +78,40 @@ def move_to_history(match, date):
         history_data['matches'][date].append(match)
         save_json_file(history_data, history_file)
         print(f"Moved match {match['id']} to history")
+
+def validate_match_data(match):
+    """验证比赛数据的完整性"""
+    # 必需字段
+    required_fields = ['id', 'league', 'status', 'startTime', 'homeTeam', 'awayTeam', 'venue', 'broadcast']
+    
+    # 检查必需字段
+    if not all(field in match for field in required_fields):
+        missing_fields = [field for field in required_fields if field not in match]
+        print(f"Match {match.get('id', 'Unknown')} missing required fields: {missing_fields}")
+        return False
+    
+    # 检查队伍信息
+    for team_type in ['homeTeam', 'awayTeam']:
+        team = match[team_type]
+        team_required_fields = ['id', 'name', 'logo']
+        if not all(field in team for field in team_required_fields):
+            print(f"Team {team.get('name', 'Unknown')} missing required fields")
+            return False
+    
+    # 验证时间格式
+    try:
+        datetime.strptime(match['startTime'], '%H:%M')
+    except ValueError:
+        print(f"Invalid time format for match {match['id']}")
+        return False
+    
+    # 验证状态值
+    valid_statuses = ['未开始', '进行中', '已结束']
+    if match['status'] not in valid_statuses:
+        print(f"Invalid status for match {match['id']}: {match['status']}")
+        return False
+    
+    return True
 
 def main():
     try:
