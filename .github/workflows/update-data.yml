@@ -6,46 +6,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # 添加这个权限配置
-
-jobs:
-  update-data:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # 添加 token
-          
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
-          
-      - name: Update match data
-        run: |
-          python scripts/update_matches.py
-          
-      - name: Commit and push if changed
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add data/matches/current.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update match data" && git push)
-name: Update Match Data
-
-on:
-  schedule:
-    - cron: '*/30 * * * *'
-  workflow_dispatch:
-
-permissions:
   contents: write
   issues: write    # 添加创建 issue 的权限
 
