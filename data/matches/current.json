@@ -21,7 +21,7 @@
         "2024-01-25": [
             {
                 "venue": "老特拉福德",
-                "league": "英超联赛",
+                "league": "英超",
                 "status": "live",
                 "homeTeam": {
                     "name": "曼联",
@@ -38,7 +38,7 @@
             },
             {
                 "venue": "伯纳乌",
-                "league": "西甲联赛",
+                "league": "西甲",
                 "status": "upcoming",
                 "homeTeam": {
                     "name": "皇家马德里",
