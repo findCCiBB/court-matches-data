@@ -1,0 +1,48 @@
+name: Backup Match Data
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天午夜运行
+  workflow_dispatch:     # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        
+      - name: Create backup directory
+        run: mkdir -p backup
+        
+      - name: Backup current matches
+        run: |
+          cp data/matches/current.json backup/current_${{ steps.date.outputs.date }}.json
+          
+      - name: Backup history matches
+        run: |
+          cp -r data/matches/history backup/history_${{ steps.date.outputs.date }}
+          
+      - name: Create backup archive
+        run: |
+          tar -czf backup_${{ steps.date.outputs.date }}.tar.gz backup/
+          
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: match-data-backup-${{ steps.date.outputs.date }}
+          path: backup_${{ steps.date.outputs.date }}.tar.gz
+          retention-days: 30  # 保留30天
+          
+      - name: Cleanup
+        run: |
+          rm -rf backup/
+          rm backup_${{ steps.date.outputs.date }}.tar.gz
