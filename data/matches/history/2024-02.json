@@ -1,0 +1,33 @@
+{
+  "month": "2024-02",
+  "matches": {
+    "2024-02-05": [
+      {
+        "id": "20240205001",
+        "league": "NBA",
+        "status": "已结束",
+        "startTime": "09:00",
+        "homeTeam": {
+          "id": "bucks",
+          "name": "雄鹿",
+          "logo": "teams/nba/bucks.png",
+          "score": 112
+        },
+        "awayTeam": {
+          "id": "jazz",
+          "name": "爵士",
+          "logo": "teams/nba/jazz.png",
+          "score": 108
+        },
+        "venue": "费谢尔论坛球馆",
+        "broadcast": "腾讯体育",
+        "highlights": [
+          {
+            "time": "Q4 2:30",
+            "description": "字母哥关键三分命中"
+          }
+        ]
+      }
+    ]
+  }
+}
