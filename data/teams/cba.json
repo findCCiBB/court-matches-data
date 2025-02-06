@@ -1,0 +1,32 @@
+{
+  "league": "CBA",
+  "teams": [
+    {
+      "id": "guangdong",
+      "name": "广东宏远",
+      "shortName": "广东",
+      "city": "广东",
+      "logo": "teams/cba/guangdong.png",
+      "primaryColor": "#E31837",
+      "secondaryColor": "#FFFFFF"
+    },
+    {
+      "id": "liaoning",
+      "name": "辽宁本钢",
+      "shortName": "辽宁",
+      "city": "辽宁",
+      "logo": "teams/cba/liaoning.png",
+      "primaryColor": "#003399",
+      "secondaryColor": "#FFFFFF"
+    },
+    {
+      "id": "beijing",
+      "name": "北京首钢",
+      "shortName": "北京",
+      "city": "北京",
+      "logo": "teams/cba/beijing.png",
+      "primaryColor": "#C8102E",
+      "secondaryColor": "#FFFFFF"
+    }
+  ]
+}
