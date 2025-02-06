@@ -1,27 +1,57 @@
 {
-  "lastUpdated": "2025-02-06T15:31:23.189567+00:00",
-  "matches": {
-    "2024-02-06": [
-      {
-        "id": "20240206001",
-        "league": "NBA",
-        "status": "未开始",
-        "startTime": "20:00",
-        "homeTeam": {
-          "id": "lakers",
-          "name": "湖人",
-          "logo": "teams/nba/lakers.png",
-          "score": null
-        },
-        "awayTeam": {
-          "id": "warriors",
-          "name": "勇士",
-          "logo": "teams/nba/warriors.png",
-          "score": null
-        },
-        "venue": "斯台普斯中心",
-        "broadcast": "腾讯体育"
-      }
-    ]
-  }
+    "matches": {
+        "2024-01-24": [
+            {
+                "venue": "斯台普斯中心",
+                "league": "NBA",
+                "status": "finished",
+                "homeTeam": {
+                    "name": "湖人",
+                    "logo": "images/湖人.jpg",
+                    "score": 112
+                },
+                "awayTeam": {
+                    "name": "勇士",
+                    "logo": "images/勇士.jpg",
+                    "score": 108
+                },
+                "startTime": "21:30"
+            }
+        ],
+        "2024-01-25": [
+            {
+                "venue": "老特拉福德",
+                "league": "英超联赛",
+                "status": "live",
+                "homeTeam": {
+                    "name": "曼联",
+                    "logo": "images/曼联.jpg",
+                    "score": 2
+                },
+                "awayTeam": {
+                    "name": "阿森纳",
+                    "logo": "images/阿森纳.jpg",
+                    "score": 1
+                },
+                "startTime": "20:00",
+                "currentTime": "75'"
+            },
+            {
+                "venue": "伯纳乌",
+                "league": "西甲联赛",
+                "status": "upcoming",
+                "homeTeam": {
+                    "name": "皇家马德里",
+                    "logo": "images/皇马.jpg",
+                    "score": 0
+                },
+                "awayTeam": {
+                    "name": "巴塞罗那",
+                    "logo": "images/巴萨.jpg",
+                    "score": 0
+                },
+                "startTime": "20:45"
+            }
+        ]
+    }
 }
