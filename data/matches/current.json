@@ -1,17 +1,18 @@
 {
-    "matches": {
-        "2024-02-08": [
-            {
-                "league": "NBA",
-                "homeTeam": {
-                    "name": "湖人",
-                    "score": 112
-                },
-                "awayTeam": {
-                    "name": "勇士",
-                    "score": 108
-                }
-            }
-        ]
-    }
+  "matches": {
+    "2024-02-08": [
+      {
+        "league": "NBA",
+        "homeTeam": {
+          "name": "湖人",
+          "score": 112
+        },
+        "awayTeam": {
+          "name": "勇士",
+          "score": 108
+        }
+      }
+    ]
+  },
+  "lastUpdated": "2025-02-08T13:27:53.539896+00:00"
 }
